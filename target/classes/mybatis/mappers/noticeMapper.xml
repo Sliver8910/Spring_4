@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  
+  <mapper namespace="noticeMapper">
+  	<select id="boardList"
+		resultType="NoticeVO" parameterType="Pager">
+		select * from
+		(select N.*, rownum R from
+		(select * from notice 
+		<choose>
+			<when test="kind == 'kt'">
+				where title like '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kw'">
+				where writer like '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kc'">
+				where contents like '%'||#{search}||'%'
+			</when>
+		</choose>
+		order by num desc) N)
+	where R between #{startRow} and #{lastRow}<!-- 꺼낸거 담아주는 vo를 리턴 -->
+	</select>
+	
+	<select id="boardCount" resultType="Integer" parameterType="Pager">
+		select count(num) from notice
+		<choose>
+			<when test="kind == 'kt'">
+				where title like '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kw'">
+				where writer like '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kc'">
+				where contents like '%'||#{search}||'%'
+			</when>
+		</choose>
+	</select>
+	
+	<insert id="boardWrite" parameterType="NoticeVO">
+		insert into notice values(board_seq.nextval, #{title}, #{writer},
+		#{contents},sysdate, 0)
+	</insert>
+	
+	<select id="boardSelect" resultType="NoticeVO" parameterType="BoardVO">
+		select * from notice where num=#{num}
+	</select>
+	
+	<delete id="boardDelete" parameterType="Integer">
+		delete notice where num=#{num}
+	</delete>
+	
+	<update id="boardUpdate" parameterType="NoticeVO">
+		update notice set title=#{title}, writer=#{writer}, contents=#{contents}
+		where num=#{num}
+	</update>
+  
+  </mapper>
