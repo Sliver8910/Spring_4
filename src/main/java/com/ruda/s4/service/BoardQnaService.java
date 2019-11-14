@@ -49,7 +49,7 @@ public class BoardQnaService implements BoardService{
 	
 	public int boardReply(BoardVO boardVO)throws Exception{
 		
-		BoardQnaVO parent = (BoardQnaVO) boardQnaDAO.boardSelect(boardVO);
+		BoardQnaVO parent = (BoardQnaVO)boardQnaDAO.boardSelect(boardVO);
 		int result = boardQnaDAO.boardReplyUpdate(parent);
 		parent.setTitle(boardVO.getTitle());
 		parent.setTitle(boardVO.getTitle());

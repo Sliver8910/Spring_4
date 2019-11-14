@@ -54,11 +54,11 @@ public class BoardQnaDAO implements BoardDAO{
 	}
 	
 	public int boardReply(BoardQnaVO boardQnaVO) throws Exception{
-		return sqlSession.insert(NAMESPACE+"qnaReply", boardQnaVO);
+		return sqlSession.insert(NAMESPACE+"boardReply", boardQnaVO);
 	}
 	
 	public int boardReplyUpdate(BoardQnaVO boardQnaVO)throws Exception{
-		return sqlSession.update(NAMESPACE+"qnaReplyUpdate", boardQnaVO);
+		return sqlSession.update(NAMESPACE+"boardReplyUpdate", boardQnaVO);
 	}
 	
 

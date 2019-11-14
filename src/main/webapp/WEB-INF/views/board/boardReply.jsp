@@ -14,7 +14,7 @@
 		<h2>${board} Reply</h2>
 		<form action="./${board}Reply" method="post"> 
 		<!-- 부모의 num을 가져오기 위해  -->
-			<input type="hidden" name = "num" value="${num}">
+			<input type="hidden" name = "num" value="${dto.num}">
 			<div class="form-group">
 				<label for="title">Title : </label> <input type="text"
 					class="form-control" id="title" name="title">
