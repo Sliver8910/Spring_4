@@ -5,12 +5,8 @@
 
   
   <mapper namespace="noticeMapper">
-  	<select id="boardList"
-		resultType="NoticeVO" parameterType="Pager">
-		select * from
-		(select N.*, rownum R from
-		(select * from notice 
-		<choose>
+  	<sql id="bs">
+  		<choose>
 			<when test="kind == 'kt'">
 				where title like '%'||#{search}||'%'
 			</when>
@@ -21,23 +17,22 @@
 				where contents like '%'||#{search}||'%'
 			</when>
 		</choose>
+  	</sql>
+  
+  
+  	<select id="boardList"
+		resultType="NoticeVO" parameterType="Pager">
+		select * from
+		(select N.*, rownum R from
+		(select * from notice 
+		<include refid="bs"></include>
 		order by num desc) N)
 	where R between #{startRow} and #{lastRow}<!-- 꺼낸거 담아주는 vo를 리턴 -->
 	</select>
 	
 	<select id="boardCount" resultType="Integer" parameterType="Pager">
 		select count(num) from notice
-		<choose>
-			<when test="kind == 'kt'">
-				where title like '%'||#{search}||'%'
-			</when>
-			<when test="kind == 'kw'">
-				where writer like '%'||#{search}||'%'
-			</when>
-			<when test="kind == 'kc'">
-				where contents like '%'||#{search}||'%'
-			</when>
-		</choose>
+		<include refid="bs"></include>
 	</select>
 	
 	<insert id="boardWrite" parameterType="NoticeVO">
