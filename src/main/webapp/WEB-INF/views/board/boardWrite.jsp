@@ -30,7 +30,7 @@
 				<div class="form-group">
 					<label for="file">File: </label> <input type="file"
 						class="form-control" id="file" name="file">
-				</div><div class="form-group">
+				</div><div class="form-group" id="updel">
 					 <input type="button" class="btn btn-danger del" value="del">
 				</div>
 			</div>
@@ -45,9 +45,7 @@
 var files = $("#files").html();
 var count =0 ;
 
-$(".del").click(function () { 
-	alert("test");
-});
+
 $("#files").empty();
 $("#add").click(function() { 
 	if(count<5){
@@ -57,6 +55,14 @@ $("#add").click(function() {
 		alert("최대 5개 가능");
 		}
 });
+
+var divs = document.querySelector("div")
+divs.forEach(function (div) {
+	div.addEventListener('click', function () {
+		alert('del');
+})});
+
+
 
 </script>
 </html>
