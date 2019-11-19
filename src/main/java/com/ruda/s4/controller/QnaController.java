@@ -3,6 +3,7 @@ package com.ruda.s4.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,9 +34,9 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value = "qnaWrite", method =  RequestMethod.POST)
-	public ModelAndView boardWrite(BoardVO boardVO)throws Exception{
+	public ModelAndView boardWrite(BoardVO boardVO, HttpSession session)throws Exception{
 		ModelAndView mv = new ModelAndView();
-		int result = boardQnaService.boardWrite(boardVO);
+		int result = boardQnaService.boardWrite(boardVO, session);
 		String message = "Write Fail";
 		if(result>0) {
 			message = "Write Success";

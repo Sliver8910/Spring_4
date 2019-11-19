@@ -37,7 +37,7 @@
 	
 	<insert id="boardWrite" parameterType="NoticeVO">
 		insert into notice values(board_seq.nextval, #{title}, #{writer},
-		#{contents},sysdate, 0)
+		#{contents},sysdate, 0, #{fileName}, #{originalName})
 	</insert>
 	
 	<select id="boardSelect" resultType="NoticeVO" parameterType="BoardVO">

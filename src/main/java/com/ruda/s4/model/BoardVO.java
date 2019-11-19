@@ -2,6 +2,8 @@ package com.ruda.s4.model;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class BoardVO {
 	private Integer num;
 	private String title;
@@ -9,7 +11,28 @@ public class BoardVO {
 	private String contents;
 	private Date reg_date;
 	private Integer hit;
+	private MultipartFile file;
+	private String fileName;
+	private String originalName;
 	
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getOriginalName() {
+		return originalName;
+	}
+	public void setOriginalName(String originalName) {
+		this.originalName = originalName;
+	}
 	public Integer getNum() {
 		return num;
 	}

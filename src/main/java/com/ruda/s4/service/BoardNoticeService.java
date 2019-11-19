@@ -3,11 +3,13 @@ package com.ruda.s4.service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
 import com.ruda.s4.dao.BoardNoticeDAO;
 import com.ruda.s4.model.BoardVO;
+import com.ruda.s4.util.FileSaver;
 import com.ruda.s4.util.Pager;
 @Service	
 public class BoardNoticeService implements BoardService{
@@ -28,8 +30,14 @@ public class BoardNoticeService implements BoardService{
 	}
 
 	@Override
-	public int boardWrite(BoardVO boardVO) throws Exception {
+	public int boardWrite(BoardVO boardVO, HttpSession session) throws Exception {
+		String realPath = session.getServletContext().getRealPath("resources/upload/notice");
+		FileSaver fs = new FileSaver();
+		String fileName = fs.save(realPath, boardVO.getFile());
 		
+		boardVO.setFileName(fileName);
+		boardVO.setOriginalName(boardVO.getFile().getOriginalFilename());
+		System.out.println(realPath);
 		return boardNoticeDAO.boardWrite(boardVO);
 	}
 
