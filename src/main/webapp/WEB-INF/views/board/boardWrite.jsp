@@ -26,13 +26,37 @@
 				<textarea class="form-control" rows="30" id="contents"
 					name="contents"></textarea>
 			</div>
-			<div class="form-group">
-				<label for="file">File: </label> <input type="file"
-					class="form-control" id="file" name="file">
+			<div id="files">
+				<div class="form-group">
+					<label for="file">File: </label> <input type="file"
+						class="form-control" id="file" name="file">
+				</div><div class="form-group">
+					 <input type="button" class="btn btn-danger del" value="del">
+				</div>
 			</div>
+			
+			<input type="button" id="add" class="btn btn-success" value="Add File">
 
 			<button type="submit" class="btn btn-default">Submit</button>
 		</form>
 	</div>
 </body>
+<script type="text/javascript">
+var files = $("#files").html();
+var count =0 ;
+
+$(".del").click(function () { 
+	alert("test");
+});
+$("#files").empty();
+$("#add").click(function() { 
+	if(count<5){
+	$("#files").append(files);
+	count++; 
+		}else{
+		alert("최대 5개 가능");
+		}
+});
+
+</script>
 </html>
