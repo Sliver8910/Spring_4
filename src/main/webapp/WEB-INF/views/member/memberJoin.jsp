@@ -12,13 +12,15 @@
 	<c:import url="../layout/nav.jsp" />
 	<div class="container">
 		<h2>Member Join</h2>
-		<form id="frm" action="./memberJoin" method="post">
-			<div class="form-group ">
-				<label class="control-label col-sm-2" for="id">ID:</label>
+		<form id="frm" action="./memberJoin" method="post"
+			enctype="multipart/form-data">
+			<!-- Id -->
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="Id">Id:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" name="id"
-						required="required" id="id"> <span id="checkId"
-						class="btn-primary input-group-addon ">중복확인</span>
+					<input type="text" class="form-control" id="id"
+						placeholder="Enter id" name="id">
+					<div id="checkIdResult"></div>
 				</div>
 			</div>
 			<div class="form-group">
@@ -45,11 +47,10 @@
 			<div class="form-group">
 				<label for="file" class="control-label col-sm-2">File:</label>
 				<div class="col-sm-10">
-					<input type="file" name="file" 
-						class="form-control" id="file">
+					<input type="file" name="file" class="form-control" id="file">
 				</div>
-				</div>
-			
+			</div>
+
 			<div class="form-group">
 				<label for="email" class="control-label col-sm-2">Email:</label>
 				<div class="col-sm-10">
@@ -80,12 +81,29 @@
 
 </body>
 <script type="text/javascript">
-	//$("선택자").action();
-	$("#checkId").click(
-			function() {
-				var id = $("#id").val();
-				window.open("./memberCheckId?id=" + id, "",
-						"width=500,height=300, left=400, top=200")
-			});//callback함수
+	var idCheck = false; //false: 중복된 ID, 또는 중복 검사를 하지 않은 경우
+	//true : 중복되지 않은 ID.	
+	$("#join").click(function() {
+		alert(idCheck);
+	});
+	$("#id").blur(function() {
+		var id = $(this).val();
+		$.post("./memberCheckId", {
+			id : id
+		}, function(data) {
+			data = data.trim();
+			if (data == 'pass') {
+				$("#checkIdResult").html('사용가능한 ID');
+				$("#checkIdResult").attr("class", "text-success");
+				idCheck = true;
+			} else {
+				$("#checkIdResult").html('중복된 ID');
+				$("#checkIdResult").attr("class", "text-danger");
+				idCheck = false;
+				$("#id").val("");
+
+			}
+		});
+	});
 </script>
 </html>

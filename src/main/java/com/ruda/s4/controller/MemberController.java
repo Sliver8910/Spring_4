@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ruda.s4.model.MemberVO;
@@ -27,30 +28,30 @@ public class MemberController {
 	}
 
 	@PostMapping(value = "memberJoin")
-	public ModelAndView memberJoin(MemberVO memberVO)throws Exception{
-		int result = memberServiceImpl.memberJoin(memberVO);
-		ModelAndView mv = new ModelAndView();
-		String message = "Join Fail";
-		if(result>0) {
-			message = "Join Success";
-		}
-		mv.addObject("msg", message);
-		mv.addObject("path", "../");
-		mv.setViewName("common/common_result");
+	public ModelAndView memberJoin(MemberVO memberVO, HttpSession session, HttpServletRequest request)throws Exception{
 		
+		ModelAndView mv = new ModelAndView();
+		 int result = memberServiceImpl.memberJoin(memberVO, session); 
+		 String message = "Join Fail"; 
+		  if(result>0) { message = "Join Success"; } 
+		  mv.addObject("msg",message); 
+		  mv.addObject("path", "../");
+		  mv.setViewName("common/common_result");
+		 
 		return mv;		
 	}
 	
-	@GetMapping(value = "memberCheckId")
+	@PostMapping(value = "memberCheckId")
 	public void memberCheckId(MemberVO memberVO, Model model)throws Exception{
 		memberVO = memberServiceImpl.memberCheckId(memberVO);
-		String result = "중복된 ID";
+		String result ="unpass";
+		
 		if(memberVO == null) {
-			//사용가능
-			result="사용가능한 ID";
+			result ="pass";
 		}
-		model.addAttribute("dto", memberVO);
+		
 		model.addAttribute("result", result);
+		
 	}
 	
 	@GetMapping(value = "memberLogin")
@@ -79,14 +80,16 @@ public class MemberController {
 	}
 	
 	@GetMapping(value = "memberUpdate")
-	public void memberUpdate(HttpSession session)throws Exception{
-		session.getAttribute("dtp");
+	public String memberUpdate(Model model ,MemberVO memberVO)throws Exception{
+		memberVO = memberServiceImpl.memberLogin(memberVO);
+		model.addAttribute("dto", memberVO);
+		return "member/memberUpdate";
 	}
 	
 	@PostMapping(value = "memberUpdate")
-	public ModelAndView memberUpdate(MemberVO memberVO)throws Exception{
-		int result = memberServiceImpl.memberUpdate(memberVO);
+	public ModelAndView memberUpdate(MemberVO memberVO )throws Exception{
 		ModelAndView mv = new ModelAndView();
+		int result = memberServiceImpl.memberUpdate(memberVO);
 		String message = "Update Fail";
 		if(result>0) {
 			message = "Update Success";
@@ -98,4 +101,11 @@ public class MemberController {
 		return mv;
 		
 	}
+	
+	@GetMapping("memberDelete")
+	public void memberDelete()throws Exception{
+		
+		
+	}
+	
 }

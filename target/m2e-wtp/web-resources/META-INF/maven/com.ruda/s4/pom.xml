@@ -20,6 +20,13 @@
 		</repository>
 	</repositories>
 	<dependencies>
+	
+	<!-- file-upload -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.3.2</version>
+		</dependency>
 		<!--Mybatis -->
 		<dependency> 
 			<groupId>org.mybatis</groupId>

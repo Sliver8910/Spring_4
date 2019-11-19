@@ -17,6 +17,10 @@
 	<P>성별 : ${dto.gender}</P>
 	<p>생년월일 : ${dto.birth}</p>
 	<p>포인트 : ${dto.point}</p>
+	<div>
+		<img alt="" src="../resources/upload/member/${member.fileName}">
+	</div>
+	
 	<a href="./memberUpdate" class="btn btn-primary">회원정보 수정</a>
 	<a href="./memberDelete" class="btn btn-danger">회원 탈퇴</a>
 

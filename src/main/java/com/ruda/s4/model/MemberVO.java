@@ -1,5 +1,7 @@
 package com.ruda.s4.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemberVO {
 	private String id;
 	private String pw;
@@ -8,7 +10,28 @@ public class MemberVO {
 	private String birth;
 	private String gender;
 	private Integer point;
+	private MultipartFile file;
+	private String fileName;
+	private String originalName;
 	
+	public String getOrignalName() {
+		return originalName;
+	}
+	public void setOrignalName(String originalName) {
+		this.originalName = originalName;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 	public String getId() {
 		return id;
 	}
