@@ -12,7 +12,7 @@
 	<c:import url="../layout/nav.jsp" />
 	<div class="container">
 		<h2>Member Join</h2>
-		<form action="./memberJoin" method="post">
+		<form id="frm" action="./memberJoin" method="post">
 			<div class="form-group ">
 				<label class="control-label col-sm-2" for="id">ID:</label>
 				<div class="col-sm-10">
@@ -42,6 +42,14 @@
 						class="form-control" id="name">
 				</div>
 			</div>
+			<div class="form-group">
+				<label for="file" class="control-label col-sm-2">File:</label>
+				<div class="col-sm-10">
+					<input type="file" name="file" 
+						class="form-control" id="file">
+				</div>
+				</div>
+			
 			<div class="form-group">
 				<label for="email" class="control-label col-sm-2">Email:</label>
 				<div class="col-sm-10">
