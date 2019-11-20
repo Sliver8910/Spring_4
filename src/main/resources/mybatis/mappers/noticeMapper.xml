@@ -44,8 +44,26 @@
 		(#{num}, #{title}, #{writer}, #{contents},sysdate, 0)
 	</insert>
 	
-	<select id="boardSelect" resultType="NoticeVO" parameterType="BoardVO">
-		select * from notice where num=#{num}
+	<resultMap type="NoticeVO" id="boardFile">
+		<id property="num" column="num"/>
+		<result property="title" column="title"/>
+		<result property="writer" column="writer"/>
+		<result property="contents" column="contents"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="hit" column="hit"/>
+		<!-- List는 Collcetion 으로 가져온다 , javaType은 해당맴버변수타입, ofType은 제네릭 타입 -->
+		<collection property="files" javaType="List" ofType="NoticeFilesVO">
+			<id property="fnum" column="fnum"/>
+			<result property="fname" column="fname"/>
+			<result property="oname" column="oname"/>
+		</collection>
+	</resultMap>
+	<!-- noticeVO를 resultMap에서 받아오므로 resultMap에 id 입력  -->
+	<select id="boardSelect" resultMap="boardFile" parameterType="BoardVO">
+		  select N.*,F.fnum, F.fname, F.oname
+         from notice N full outer join noticefiles F
+         on N.num = F.num 
+         where N.num = #{num}
 	</select>
 	
 	<delete id="boardDelete" parameterType="Integer">

@@ -15,5 +15,6 @@
   		<typeAlias type="com.ruda.s4.model.MemberVO" alias="MemberVO"/>
   		<typeAlias type="com.ruda.s4.model.NoticeFilesVO" alias="NoticeFilesVO"/>
   		<typeAlias type="com.ruda.s4.model.QnaFilesVO" alias="QnaFilesVO"/>
+  		<typeAlias type="java.util.List" alias="List"/>
   	</typeAliases>
   </configuration>
