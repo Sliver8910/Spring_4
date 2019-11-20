@@ -32,6 +32,15 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<div>
+		<c:if test="${board eq 'notice'}">
+			<c:forEach items="${dto.files}" var="file">
+				<a href="../resources/upload/${board}/${file.fname}">${file.oname}</a>
+			</c:forEach>
+		</c:if>	
+		</div>
+		
 		<a href="qnaList" class="btn btn-primary">글목록</a>
 		<a class="btn btn-primary" href="${board}Update?num=${dto.num}">Update</a>
 		<a class="btn btn-danger" href="${board}Delete?num=${dto.num}">Delete</a>
@@ -39,5 +48,7 @@
 			<a class="btn btn-primary" href="${board}Reply?num=${dto.num}">답글</a>
 		</c:if>
 	</div>
+	
+	
 </body>
 </html>

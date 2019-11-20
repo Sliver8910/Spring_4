@@ -35,9 +35,13 @@
 		<include refid="bs"></include>
 	</select>
 	
-	<insert id="boardWrite" parameterType="NoticeVO">
-		insert into notice values(board_seq.nextval, #{title}, #{writer},
-		#{contents},sysdate, 0, #{fileName}, #{originalName})
+	<insert id="boardWrite" parameterType="BoardVO">
+		<selectKey order="BEFORE" resultType="Integer" keyProperty="num">
+			select board_seq.nextval from dual
+		</selectKey>
+	
+		insert into notice values
+		(#{num}, #{title}, #{writer}, #{contents},sysdate, 0)
 	</insert>
 	
 	<select id="boardSelect" resultType="NoticeVO" parameterType="BoardVO">

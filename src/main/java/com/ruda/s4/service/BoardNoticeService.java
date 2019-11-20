@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ruda.s4.dao.BoardNoticeDAO;
 import com.ruda.s4.dao.NoticeFilesDAO;
+import com.ruda.s4.model.BoardNoticeVO;
 import com.ruda.s4.model.BoardVO;
 import com.ruda.s4.model.NoticeFilesVO;
 import com.ruda.s4.util.FileSaver;
@@ -18,12 +19,12 @@ import com.ruda.s4.util.Pager;
 public class BoardNoticeService implements BoardService{
 	@Inject
 	private BoardNoticeDAO boardNoticeDAO;
-	
+
 	@Inject
 	private FileSaver fileSaver;  //FileSaver에 가서 component 어노테이션 선언
 	@Inject
 	private NoticeFilesDAO noticeFilesDAO;
-	
+
 	@Override
 	public List<BoardVO> boardList(Pager pager) throws Exception {
 		pager.makeRow();
@@ -33,27 +34,32 @@ public class BoardNoticeService implements BoardService{
 
 	@Override
 	public BoardVO boardSelect(BoardVO boardVO) throws Exception {
-		// TODO Auto-generated method stub
-		return boardNoticeDAO.boardSelect(boardVO);
+		boardVO = boardNoticeDAO.boardSelect(boardVO);
+		BoardNoticeVO boardNoticeVO = (BoardNoticeVO)boardVO;
+		List<NoticeFilesVO> ar = noticeFilesDAO.fileList(boardVO.getNum());
+		
+		boardNoticeVO.setFiles(ar);
+		
+		return boardNoticeVO;
 	}
 
 	@Override
 	public int boardWrite(BoardVO boardVO, HttpSession session, MultipartFile [] file) throws Exception {
 		String realPath = session.getServletContext().getRealPath("resources/upload/notice");
 		NoticeFilesVO noticeFilesVO = new NoticeFilesVO();
-		
+
 		int result = boardNoticeDAO.boardWrite(boardVO);
+		noticeFilesVO.setNum(boardVO.getNum());
 		System.out.println(boardVO.getNum());
-		/*
-		 * for(MultipartFile multipartFile:file){ //향상된 for문으로 file이라는 이름의 배열에서
-		 * MultipartFile을 꺼내옴
-		 * 
-		 * String fileName = fileSaver.save(realPath, multipartFile); // fname
-		 * noticeFilesVO.setFname(fileName);
-		 * noticeFilesVO.setOname(multipartFile.getOriginalFilename());
-		 * noticeFilesDAO.fileWrite(noticeFilesVO); }
-		 */
-		
+
+		for(MultipartFile multipartFile:file){ //향상된 for문으로 file이라는 이름의 배열에서 MultipartFile을 꺼내옴
+
+			String fileName = fileSaver.save(realPath, multipartFile); // fname
+			noticeFilesVO.setFname(fileName);
+			noticeFilesVO.setOname(multipartFile.getOriginalFilename());
+			noticeFilesDAO.fileWrite(noticeFilesVO); }
+
+
 		return result;
 	}
 

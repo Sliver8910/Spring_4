@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ruda.s4.model.BoardQnaVO;
@@ -34,9 +35,9 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value = "qnaWrite", method =  RequestMethod.POST)
-	public ModelAndView boardWrite(BoardVO boardVO, HttpSession session)throws Exception{
+	public ModelAndView boardWrite(BoardVO boardVO, HttpSession session, MultipartFile [] file)throws Exception{
 		ModelAndView mv = new ModelAndView();
-		int result = boardQnaService.boardWrite(boardVO, session);
+		int result = boardQnaService.boardWrite(boardVO, session, file);
 		String message = "Write Fail";
 		if(result>0) {
 			message = "Write Success";

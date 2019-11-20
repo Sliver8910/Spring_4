@@ -40,14 +40,14 @@ public class NoticeController {
 	public ModelAndView boardWrite(BoardVO boardVO, HttpSession session, MultipartFile [] file)throws Exception{
 		
 		ModelAndView mv = new ModelAndView();
-		//int result = boardNoticeService.boardWrite(boardVO, session);
-		//if(result>0) {
-		//	mv.setViewName("redirect:./noticeList");
-		//}else {
-		//	mv.addObject("msg", "Write Fail");
-		//	mv.addObject("path", "./noticeList");
-		//	mv.setViewName("common/common_result");
-		//}
+		int result = boardNoticeService.boardWrite(boardVO, session, file);
+		if(result>0) {
+			mv.setViewName("redirect:./noticeList");
+		}else {
+			mv.addObject("msg", "Write Fail");
+			mv.addObject("path", "./noticeList");
+			mv.setViewName("common/common_result");
+		}
 		return mv;
 	}
 	
