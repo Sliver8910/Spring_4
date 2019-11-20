@@ -7,9 +7,10 @@ import java.util.Calendar;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
-
+@Component
 public class FileSaver {
 	
 

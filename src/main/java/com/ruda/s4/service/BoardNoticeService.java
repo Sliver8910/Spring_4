@@ -6,15 +6,23 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ruda.s4.dao.BoardNoticeDAO;
+import com.ruda.s4.dao.NoticeFilesDAO;
 import com.ruda.s4.model.BoardVO;
+import com.ruda.s4.model.NoticeFilesVO;
 import com.ruda.s4.util.FileSaver;
 import com.ruda.s4.util.Pager;
 @Service	
 public class BoardNoticeService implements BoardService{
 	@Inject
 	private BoardNoticeDAO boardNoticeDAO;
+	
+	@Inject
+	private FileSaver fileSaver;  //FileSaver에 가서 component 어노테이션 선언
+	@Inject
+	private NoticeFilesDAO noticeFilesDAO;
 	
 	@Override
 	public List<BoardVO> boardList(Pager pager) throws Exception {
@@ -30,15 +38,23 @@ public class BoardNoticeService implements BoardService{
 	}
 
 	@Override
-	public int boardWrite(BoardVO boardVO, HttpSession session) throws Exception {
+	public int boardWrite(BoardVO boardVO, HttpSession session, MultipartFile [] file) throws Exception {
 		String realPath = session.getServletContext().getRealPath("resources/upload/notice");
-		FileSaver fs = new FileSaver();
-		String fileName = fs.save(realPath, boardVO.getFile());
+		NoticeFilesVO noticeFilesVO = new NoticeFilesVO();
 		
-		boardVO.setFileName(fileName);
-		boardVO.setOriginalName(boardVO.getFile().getOriginalFilename());
-		System.out.println(realPath);
-		return boardNoticeDAO.boardWrite(boardVO);
+		int result = boardNoticeDAO.boardWrite(boardVO);
+		System.out.println(boardVO.getNum());
+		/*
+		 * for(MultipartFile multipartFile:file){ //향상된 for문으로 file이라는 이름의 배열에서
+		 * MultipartFile을 꺼내옴
+		 * 
+		 * String fileName = fileSaver.save(realPath, multipartFile); // fname
+		 * noticeFilesVO.setFname(fileName);
+		 * noticeFilesVO.setOname(multipartFile.getOriginalFilename());
+		 * noticeFilesDAO.fileWrite(noticeFilesVO); }
+		 */
+		
+		return result;
 	}
 
 	@Override

@@ -27,11 +27,12 @@
 					name="contents"></textarea>
 			</div>
 			<div id="files">
-				<div class="form-group">
-					<label for="file">File: </label> <input type="file"
-						class="form-control" id="file" name="file">
-				</div><div class="form-group" id="updel">
-					 <input type="button" class="btn btn-danger del" value="del">
+				<div class="form-group updel">
+						<label for="file">File: </label> 
+						<input type="file" class="form-control" id="file" name="file">
+					<div class="form-group" >
+						 <input type="button" class="btn btn-danger del" value="del">
+					</div>
 				</div>
 			</div>
 			
@@ -44,7 +45,14 @@
 <script type="text/javascript">
 var files = $("#files").html();
 var count =0 ;
+var index = 0; // index  번호 
 
+$("#files").on("click", ".del",function(){
+	/* 여기서 this는 del 버튼 */
+	$(this).parents(".updel").remove();
+	//$(this).parent().parent().remove();
+	count--;
+});
 
 $("#files").empty();
 $("#add").click(function() { 

@@ -11,16 +11,10 @@ public class BoardVO {
 	private String contents;
 	private Date reg_date;
 	private Integer hit;
-	private MultipartFile file;
 	private String fileName;
 	private String originalName;
 	
-	public MultipartFile getFile() {
-		return file;
-	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
+
 	public String getFileName() {
 		return fileName;
 	}

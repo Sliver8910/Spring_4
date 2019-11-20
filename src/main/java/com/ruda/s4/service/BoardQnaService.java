@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ruda.s4.dao.BoardQnaDAO;
 import com.ruda.s4.model.BoardQnaVO;
@@ -31,7 +32,7 @@ public class BoardQnaService implements BoardService{
 	}
 
 	@Override
-	public int boardWrite(BoardVO boardVO, HttpSession session) throws Exception {
+	public int boardWrite(BoardVO boardVO, HttpSession session, MultipartFile [] file) throws Exception {
 		// TODO Auto-generated method stub
 		return boardQnaDAO.boardWrite(boardVO);
 	}

@@ -1,5 +1,6 @@
 package com.ruda.s4.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ruda.s4.model.BoardVO;
@@ -35,16 +37,17 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "noticeWrite", method =  RequestMethod.POST)
-	public ModelAndView boardWrite(BoardVO boardVO, HttpSession session)throws Exception{
+	public ModelAndView boardWrite(BoardVO boardVO, HttpSession session, MultipartFile [] file)throws Exception{
+		
 		ModelAndView mv = new ModelAndView();
-		int result = boardNoticeService.boardWrite(boardVO, session);
-		if(result>0) {
-			mv.setViewName("redirect:./noticeList");
-		}else {
-			mv.addObject("msg", "Write Fail");
-			mv.addObject("path", "./noticeList");
-			mv.setViewName("common/common_result");
-		}
+		//int result = boardNoticeService.boardWrite(boardVO, session);
+		//if(result>0) {
+		//	mv.setViewName("redirect:./noticeList");
+		//}else {
+		//	mv.addObject("msg", "Write Fail");
+		//	mv.addObject("path", "./noticeList");
+		//	mv.setViewName("common/common_result");
+		//}
 		return mv;
 	}
 	
