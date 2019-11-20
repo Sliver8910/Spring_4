@@ -41,7 +41,8 @@ public class BoardNoticeService implements BoardService{
 	public int boardWrite(BoardVO boardVO, HttpSession session, MultipartFile [] file) throws Exception {
 		String realPath = session.getServletContext().getRealPath("resources/upload/notice");
 		NoticeFilesVO noticeFilesVO = new NoticeFilesVO();
-		
+		int num = boardNoticeDAO.getNum();
+		boardVO.setNum(num);
 		int result = boardNoticeDAO.boardWrite(boardVO);
 		System.out.println(boardVO.getNum());
 		/*

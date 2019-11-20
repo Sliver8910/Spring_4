@@ -35,9 +35,14 @@
 		<include refid="bs"></include>
 	</select>
 	
+	<select id="getNum" resultType="Integer">
+		<!-- 가상의 테이블 dual에 시퀀스를 불러옴 -->
+		select board_seq.nextval from dual  
+	</select>
+	
 	<insert id="boardWrite" parameterType="NoticeVO">
-		insert into notice values(board_seq.nextval, #{title}, #{writer},
-		#{contents},sysdate, 0, #{fileName}, #{originalName})
+		insert into notice values
+		(#{num}, #{title}, #{writer}, #{contents},sysdate, 0, #{fileName}, #{originalName})
 	</insert>
 	
 	<select id="boardSelect" resultType="NoticeVO" parameterType="BoardVO">
