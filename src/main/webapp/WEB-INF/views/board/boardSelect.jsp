@@ -34,11 +34,9 @@
 		</table>
 		
 		<div>
-		<c:if test="${board eq 'notice'}">
 			<c:forEach items="${dto.files}" var="file">
 				<a href="../resources/upload/${board}/${file.fname}">${file.oname}</a>
 			</c:forEach>
-		</c:if>	
 		</div>
 		
 		<a href="qnaList" class="btn btn-primary">글목록</a>
