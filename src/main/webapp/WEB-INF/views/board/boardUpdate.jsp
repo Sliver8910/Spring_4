@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +12,8 @@
 <body>
 <c:import url="../layout/nav.jsp"/>
 	<div class="container">
-		<h2>${board} Update Page</h2>
-		<form action="./${board}Update" method="post">
+		<h2>${fn:toUpperCase(board)} Update Page</h2>
+		<form action="./${board}Update" method="post" enctype="multipart/form-data">
 		<input type="text" name = "num" value="${dto.num}" hidden="" readonly="readonly">
 			<div class="form-group">
 				<label for="title">Title : </label> <input type="text"
@@ -55,10 +56,12 @@
 </body>
 <script type="text/javascript">
 
-var count = 0;
-count = ${size};
 var files= $("#files").html();
 $("#files").empty();
+var count = 0;
+//count = ${size};
+//EL&JSTL 새로운 JSTL을 선언, 함수를 가져옴
+count = ${fn:length(dto.files)}; 
 $("#add").click(function() {
 	if(count<5){
 	$("#files").append(files);

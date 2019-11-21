@@ -5,10 +5,17 @@
 
   
   <mapper namespace="qnaFilesMapper">
+  	<select id="fileSelect" resultType="QnaFilesVO" parameterType="QnaFilesVO">
+  		select * from qnaFiles where fnum=#{fnum}
+  	</select>
+  
   	<insert id="fileWrite" parameterType="QnaFilesVO">
   		insert into qnaFiles values(file_seq.nextval, #{num}, #{fname}, #{oname})
   	</insert>
   	<select id="fileList" parameterType="Integer" resultType="QnaFilesVO">
   		select * from qnaFiles where num=#{num}
   	</select>
+  	<delete id="fileDelete" parameterType="QnaFilesVO">
+  		delete qnaFiles where fnum=#{fnum}
+  	</delete>
   </mapper>

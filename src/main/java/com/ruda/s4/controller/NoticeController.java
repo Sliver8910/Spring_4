@@ -1,6 +1,5 @@
 package com.ruda.s4.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +26,16 @@ public class NoticeController {
 	
 	@Inject
 	private BoardNoticeService boardNoticeService;
+	
+	@GetMapping(value = "fileDown")
+	public ModelAndView fileDown(NoticeFilesVO noticeFilesVO) throws Exception{
+		noticeFilesVO = boardNoticeService.fileSelect(noticeFilesVO);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("file", noticeFilesVO);
+		mv.setViewName("fileDown");
+		mv.addObject("board", "notice");
+		return mv;
+	}
 	
 	@PostMapping(value = "fileDelete")
 	public ModelAndView fileDelete(NoticeFilesVO noticeFilesVO)throws Exception{
@@ -105,9 +115,10 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "noticeUpdate", method = RequestMethod.POST)
-	public ModelAndView boardUpdate(BoardVO boardVO)throws Exception{
+	//http session에서는 realpath를 가져옴
+	public ModelAndView boardUpdate(BoardVO boardVO, MultipartFile [] file, HttpSession session)throws Exception{
 		ModelAndView mv = new ModelAndView();
-		int result = boardNoticeService.boardUpdate(boardVO);
+		int result = boardNoticeService.boardUpdate(boardVO, file, session);
 		if(result>0) {
 			mv.setViewName("redirect:./noticeList");
 		}else {

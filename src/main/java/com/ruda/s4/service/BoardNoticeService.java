@@ -25,6 +25,10 @@ public class BoardNoticeService implements BoardService{
 	@Inject
 	private NoticeFilesDAO noticeFilesDAO;
 	
+	public NoticeFilesVO fileSelect(NoticeFilesVO noticeFilesVO)throws Exception{
+		return noticeFilesDAO.fileSelect(noticeFilesVO);
+	}
+	
 	public int fileDelete(NoticeFilesVO noticeFilesVO) throws Exception{
 		return noticeFilesDAO.fileDelete(noticeFilesVO);
 	}
@@ -58,20 +62,33 @@ public class BoardNoticeService implements BoardService{
 		System.out.println(boardVO.getNum());
 
 		for(MultipartFile multipartFile:file){ //향상된 for문으로 file이라는 이름의 배열에서 MultipartFile을 꺼내옴
-
+			if(multipartFile.getSize()!=0) {
 			String fileName = fileSaver.save(realPath, multipartFile); // fname
 			noticeFilesVO.setFname(fileName);
 			noticeFilesVO.setOname(multipartFile.getOriginalFilename());
 			noticeFilesDAO.fileWrite(noticeFilesVO); }
-
+		}
 
 		return result;
 	}
 
 	@Override
-	public int boardUpdate(BoardVO boardVO) throws Exception {
-		// TODO Auto-generated method stub
-		return boardNoticeDAO.boardUpdate(boardVO);
+	public int boardUpdate(BoardVO boardVO,  MultipartFile [] file, HttpSession session) throws Exception {
+		String realPath = session.getServletContext().getRealPath("resources/upload/notice");
+		NoticeFilesVO noticeFilesVO = new NoticeFilesVO();
+		
+		int result = boardNoticeDAO.boardUpdate(boardVO);
+		noticeFilesVO.setNum(boardVO.getNum());
+		
+		for(MultipartFile multipartFile:file) {
+			String fileName = fileSaver.save(realPath, multipartFile);
+			noticeFilesVO.setFname(fileName);
+			noticeFilesVO.setOname(multipartFile.getOriginalFilename());
+			noticeFilesDAO.fileWrite(noticeFilesVO);
+			
+		}
+		
+		return result;
 	}
 
 	@Override

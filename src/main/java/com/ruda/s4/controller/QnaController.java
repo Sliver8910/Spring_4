@@ -7,13 +7,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ruda.s4.model.BoardQnaVO;
 import com.ruda.s4.model.BoardVO;
+import com.ruda.s4.model.QnaFilesVO;
 import com.ruda.s4.service.BoardQnaService;
 import com.ruda.s4.util.Pager;
 
@@ -22,6 +24,25 @@ import com.ruda.s4.util.Pager;
 public class QnaController {
 	@Inject
 	private BoardQnaService boardQnaService;
+	
+	@GetMapping(value = "fileDown")
+	public ModelAndView fileDown(QnaFilesVO qnaFilesVO)throws Exception{
+		qnaFilesVO = boardQnaService.fileSelect(qnaFilesVO);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("file", qnaFilesVO);
+		mv.setViewName("fileDownQna");
+		mv.addObject("board", "qna");
+		return mv;
+	}
+	
+	@PostMapping(value = "fileDelete")
+	public ModelAndView fileDelete(QnaFilesVO qnaFilesVO)throws Exception{
+		int result = boardQnaService.fileDelete(qnaFilesVO);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("common/common_ajaxResult");
+		mv.addObject("result", result);
+		return mv;
+	}
 	
 	@RequestMapping("qnaList")
 	public ModelAndView boardList(Pager pager) throws Exception{
@@ -90,9 +111,9 @@ public class QnaController {
 	
 	
 	@RequestMapping(value = "qnaUpdate", method = RequestMethod.POST)
-	public ModelAndView boardUpdate(BoardVO boardVO)throws Exception{
+	public ModelAndView boardUpdate(BoardVO boardVO, MultipartFile[] file, HttpSession session)throws Exception{
 		ModelAndView mv = new ModelAndView();
-		int result = boardQnaService.boardUpdate(boardVO);
+		int result = boardQnaService.boardUpdate(boardVO, file, session);
 		if(result>0) {
 			mv.setViewName("redirect:./qnaList");
 		}else {

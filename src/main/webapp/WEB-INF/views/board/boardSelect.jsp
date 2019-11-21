@@ -35,11 +35,11 @@
 		
 		<div>
 			<c:forEach items="${dto.files}" var="file">
-				<a href="../resources/upload/${board}/${file.fname}">${file.oname}</a>
+				<a href="./fileDown?fnum=${file.fnum}">${file.oname}</a>
 			</c:forEach>
 		</div>
 		
-		<a href="qnaList" class="btn btn-primary">글목록</a>
+		<a href="${board}List" class="btn btn-primary">글목록</a>
 		<a class="btn btn-primary" href="${board}Update?num=${dto.num}">Update</a>
 		<a class="btn btn-danger" href="${board}Delete?num=${dto.num}">Delete</a>
 		<c:if test="${board eq 'qna'}">
