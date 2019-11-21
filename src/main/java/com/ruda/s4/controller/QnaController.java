@@ -80,6 +80,7 @@ public class QnaController {
 	public ModelAndView boardSelect(BoardVO boardVO)throws Exception{
 		ModelAndView mv = new ModelAndView();
 		boardVO = boardQnaService.boardSelect(boardVO);
+		boardVO.setContents(boardVO.getContents().replace("\r\n", "<br>"));
 		mv.addObject("dto", boardVO);
 		mv.addObject("board", "qna");
 		mv.setViewName("board/boardSelect");
