@@ -24,6 +24,10 @@ public class BoardNoticeService implements BoardService{
 	private FileSaver fileSaver;  //FileSaver에 가서 component 어노테이션 선언
 	@Inject
 	private NoticeFilesDAO noticeFilesDAO;
+	
+	public int fileDelete(NoticeFilesVO noticeFilesVO) throws Exception{
+		return noticeFilesDAO.fileDelete(noticeFilesVO);
+	}
 
 	@Override
 	public List<BoardVO> boardList(Pager pager) throws Exception {

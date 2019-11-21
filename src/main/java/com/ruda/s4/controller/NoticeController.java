@@ -8,12 +8,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ruda.s4.model.BoardNoticeVO;
 import com.ruda.s4.model.BoardVO;
+import com.ruda.s4.model.NoticeFilesVO;
 import com.ruda.s4.service.BoardNoticeService;
 import com.ruda.s4.util.Pager;
 
@@ -23,6 +26,17 @@ public class NoticeController {
 	
 	@Inject
 	private BoardNoticeService boardNoticeService;
+	
+	@PostMapping(value = "fileDelete")
+	public ModelAndView fileDelete(NoticeFilesVO noticeFilesVO)throws Exception{
+		int result = boardNoticeService.fileDelete(noticeFilesVO);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("common/common_ajaxResult");
+		mv.addObject("result", result);
+		return mv;
+
+	}
+	
 	
 	@RequestMapping("noticeList")
 	public ModelAndView boardList(Pager pager) throws Exception{
@@ -83,6 +97,8 @@ public class NoticeController {
 	@RequestMapping(value = "noticeUpdate", method = RequestMethod.GET)
 	public String boardUpdate(Model model, BoardVO boardVO)throws Exception{
 		boardVO = boardNoticeService.boardSelect(boardVO);
+		BoardNoticeVO boardNoticeVO = (BoardNoticeVO)boardVO;
+		model.addAttribute("size", boardNoticeVO.getFiles().size());
 		model.addAttribute("dto", boardVO);
 		model.addAttribute("board", "notice");
 		return "board/boardUpdate";

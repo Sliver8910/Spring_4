@@ -28,10 +28,62 @@
 				<textarea class="form-control" rows="30" id="contents"
 					name="contents"  >${dto.contents}</textarea>
 			</div>
-
+			
+			<div id="files">
+				<div class="form-group updel">
+						<label for="file">File: </label> 
+						<input type="file" class="form-control" id="file" name="file">
+					<div class="form-group" >
+						 <input type="button" class="btn btn-danger del" value="del">
+					</div>
+				</div>
+			</div>
+			<input type="button" id="add" class="btn btn-success" value="Add File">
+			
+			
+			<div>
+				<c:forEach items="${dto.files}" var="file">
+					<div id="f${file.fnum}">
+						<p>${file.oname} <input type="button" id="${file.fnum}" class="del_file" value="del"></p>
+					</div>
+				</c:forEach>
+			</div>
 			<button type="submit" class="btn btn-default">Update</button>
 		</form>
 	</div>
 
 </body>
+<script type="text/javascript">
+
+var count = 0;
+count = ${size};
+var files= $("#files").html();
+$("#files").empty();
+$("#add").click(function() {
+	if(count<5){
+	$("#files").append(files);
+	count++}else{
+		alert("최대 5개 가능");
+	}
+});
+//이벤트 위임
+$("#files").on("click",".del",function(){
+	$(this).parents(".updel").remove();
+	count--;
+});
+
+$(".del_file").click(function () {
+	var fnum=$(this).attr("id") //id에 file.fnum을 넣고 본인의 id 속성을 가져옴
+	$.post("./fileDelete",{fnum:fnum},function(data){
+		data= data.trim(); //공백 제거
+		if(data == '1'){
+			$("#f"+fnum).remove();
+			count--;
+		}
+		alert(data);
+	});
+});
+
+</script>
+
 </html>

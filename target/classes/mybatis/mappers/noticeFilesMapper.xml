@@ -11,5 +11,8 @@
   	<select id="fileList" parameterType="Integer" resultType="NoticeFilesVO">
   		select * from noticeFiles where num = #{num}
   	</select>
+  	<delete id="fileDelete" parameterType="NoticeFilesVO">
+  		delete noticeFiles where fnum = #{fnum}
+  	</delete>
   
   </mapper>

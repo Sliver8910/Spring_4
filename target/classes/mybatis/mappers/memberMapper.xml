@@ -24,5 +24,14 @@
   	<delete id="memberDelete" parameterType="MemberVO">
   		delete member where id=#{id}
   	</delete>
+  	
+ <!--  <resultMap type="MemberVO" id="memberFile">
+  	<id property="id" column="id"/>
+  	<association property="MemberFileVO" javaType="MemberFileVO">
+  		<id property="fnum" column="fnum"/>
+  		<result property="fname" column="fname"/>
+  		<result property="oname" column="oname"/>
+  	</association>
+  </resultMap>	 -->
   
   </mapper>
