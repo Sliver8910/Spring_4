@@ -65,7 +65,7 @@ function deleteFile(file, editor) {
 	fileName = fileName.substring(fileName.lastIndexOf("/")+1);
 	$.ajax({
 		type:"POST",
-		utl:"summerFileDelete",
+		url:"summerFileDelete",
 		data:{
 			file:fileName
 		},
