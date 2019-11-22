@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:import url="../layout/summernote.jsp"></c:import>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,5 +34,10 @@
 			<button type="submit" class="btn btn-default">Submit</button>
 		</form>
 	</div>
+<script type="text/javascript">
+$('#contents').summernote({
+	height : 100
+});
+</script>
 </body>
 </html>

@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>${board} Write</title>
 <c:import url="../layout/bootstrap.jsp"/>
+<!-- 섬머노트는 부트스트랩보다 아래에 추가해야함 -->
+<c:import url="../layout/summernote.jsp"></c:import> 
 </head>
 <body>
 	<c:import url="../layout/nav.jsp"/>
@@ -39,10 +41,17 @@
 			<input type="button" id="add" class="btn btn-success" value="Add File">
 
 			<button type="submit" class="btn btn-default">Submit</button>
+			<input type="button" value="test" id="btn">
 		</form>
 	</div>
 </body>
 <script type="text/javascript">
+
+$("#contents").summernote({
+	height: 100
+});
+
+
 var files = $("#files").html();
 var count =0 ;
 var index = 0; // index  번호 

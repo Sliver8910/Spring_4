@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../layout/bootstrap.jsp"/>
+<c:import url="../layout/summernote.jsp"></c:import> 
 </head>
 <body>
 <c:import url="../layout/nav.jsp"/>
@@ -27,7 +28,7 @@
 				<label for="contents">Contents:</label>
 				
 				<textarea class="form-control" rows="30" id="contents"
-					name="contents"  >${dto.contents}</textarea>
+					name="contents"></textarea>
 			</div>
 			
 			<div id="files">
@@ -55,6 +56,12 @@
 
 </body>
 <script type="text/javascript">
+
+$("#contents").summernote({
+	height: 100
+});
+
+$("#contents").summernote('code',"${dto.contents}");
 
 var files= $("#files").html();
 $("#files").empty();
