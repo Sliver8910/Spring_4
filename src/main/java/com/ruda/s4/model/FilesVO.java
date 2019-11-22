@@ -1,6 +1,6 @@
 package com.ruda.s4.model;
 
-public class QnaFilesVO {
+public class FilesVO {
 	
 	private int fnum;
 	private int num;
@@ -30,7 +30,6 @@ public class QnaFilesVO {
 	public void setOname(String oname) {
 		this.oname = oname;
 	}
+	
 
-	
-	
 }

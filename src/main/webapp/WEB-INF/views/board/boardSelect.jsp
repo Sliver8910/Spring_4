@@ -32,7 +32,6 @@
 				</tr>
 			</tbody>
 		</table>
-		
 		<div>
 			<c:forEach items="${dto.files}" var="file">
 				<a href="./fileDown?fnum=${file.fnum}">${file.oname}</a>

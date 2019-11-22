@@ -52,7 +52,7 @@
 		<result property="reg_date" column="reg_date"/>
 		<result property="hit" column="hit"/>
 		<!-- List는 Collcetion 으로 가져온다 , javaType은 해당맴버변수타입, ofType은 제네릭 타입 -->
-		<collection property="files" javaType="List" ofType="NoticeFilesVO">
+		<collection property="files" javaType="List" ofType="FilesVO">
 			<id property="fnum" column="fnum"/>
 			<result property="fname" column="fname"/>
 			<result property="oname" column="oname"/>

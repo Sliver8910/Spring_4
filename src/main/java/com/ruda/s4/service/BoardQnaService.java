@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ruda.s4.dao.BoardQnaDAO;
 import com.ruda.s4.dao.QnaFilesDAO;
 import com.ruda.s4.model.BoardVO;
-import com.ruda.s4.model.QnaFilesVO;
+import com.ruda.s4.model.FilesVO;
 import com.ruda.s4.util.FileSaver;
 import com.ruda.s4.util.Pager;
 
@@ -24,12 +24,12 @@ public class BoardQnaService implements BoardService{
 	@Inject
 	private QnaFilesDAO qnaFilesDAO;
 
-	public QnaFilesVO fileSelect(QnaFilesVO qnaFilesVO)throws Exception{
-		return qnaFilesDAO.fileSelect(qnaFilesVO);
+	public FilesVO fileSelect(FilesVO filesVO)throws Exception{
+		return qnaFilesDAO.fileSelect(filesVO);
 	}
 	
-	public int fileDelete(QnaFilesVO qnaFilesVO)throws Exception{
-		return qnaFilesDAO.fileDelete(qnaFilesVO);
+	public int fileDelete(FilesVO filesVO)throws Exception{
+		return qnaFilesDAO.fileDelete(filesVO);
 	}
 	
 	@Override
@@ -53,16 +53,16 @@ public class BoardQnaService implements BoardService{
 	@Override
 	public int boardWrite(BoardVO boardVO, HttpSession session, MultipartFile [] file) throws Exception {
 		String realPath = session.getServletContext().getRealPath("resources/upload/qna");
-		QnaFilesVO qnaFilesVO = new QnaFilesVO();
+		FilesVO filesVO = new FilesVO();
 		
 		int result = boardQnaDAO.boardWrite(boardVO);
-		qnaFilesVO.setNum(boardVO.getNum());
+		filesVO.setNum(boardVO.getNum());
 		
 		for(MultipartFile multipartFile:file) {
 			String fileName = fileSaver.save(realPath, multipartFile);
-			qnaFilesVO.setFname(fileName);
-			qnaFilesVO.setOname(multipartFile.getOriginalFilename());
-			qnaFilesDAO.fileWrite(qnaFilesVO);
+			filesVO.setFname(fileName);
+			filesVO.setOname(multipartFile.getOriginalFilename());
+			qnaFilesDAO.fileWrite(filesVO);
 			
 		}
 		return result;
@@ -71,15 +71,15 @@ public class BoardQnaService implements BoardService{
 	@Override
 	public int boardUpdate(BoardVO boardVO, MultipartFile [] file, HttpSession session) throws Exception {
 		String realPath = session.getServletContext().getRealPath("resources/upload/qna");
-		QnaFilesVO qnaFilesVO = new QnaFilesVO();
+		FilesVO filesVO = new FilesVO();
 		int result =  boardQnaDAO.boardUpdate(boardVO);
-		qnaFilesVO.setNum(boardVO.getNum());
+		filesVO.setNum(boardVO.getNum());
 		
 		for(MultipartFile multipartFile:file) {
 			String fileName = fileSaver.save(realPath, multipartFile);
-			qnaFilesVO.setFname(fileName);
-			qnaFilesVO.setOname(multipartFile.getOriginalFilename());
-			qnaFilesDAO.fileWrite(qnaFilesVO);
+			filesVO.setFname(fileName);
+			filesVO.setOname(multipartFile.getOriginalFilename());
+			qnaFilesDAO.fileWrite(filesVO);
 			
 		}
 		return result;

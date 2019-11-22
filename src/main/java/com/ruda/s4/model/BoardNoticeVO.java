@@ -4,13 +4,13 @@ import java.util.List;
 
 public class BoardNoticeVO extends BoardVO {
 	
-	private List<NoticeFilesVO> files;
+	private List<FilesVO> files;
 
-	public List<NoticeFilesVO> getFiles() {
+	public List<FilesVO> getFiles() {
 		return files;
 	}
 
-	public void setFiles(List<NoticeFilesVO> files) {
+	public void setFiles(List<FilesVO> files) {
 		this.files = files;
 	}
 

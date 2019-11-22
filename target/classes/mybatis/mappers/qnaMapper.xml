@@ -43,23 +43,23 @@
 		<id property="num" column="num"/>
 		<result property="title" column="title"/>
 		<result property="writer" column="writer"/>
-		<result property="contetns" column="contetns"/>
+		<result property="contents" column="contents"/>
 		<result property="reg_date" column="reg_date"/>
 		<result property="hit" column="hit"/>
 		<result property="ref" column="ref"/>
 		<result property="step" column="step"/>
 		<result property="depth" column="depth"/>
-		<collection property="files" javaType="List" ofType="QnaFilesVO" resultMap="fileResult"/>		
+		<collection property="files" javaType="List" ofType="FilesVO" resultMap="fileResult"/>		
 	</resultMap>
 	
-	<resultMap type="QnaFilesVO" id="fileResult">
+	<resultMap type="FilesVO" id="fileResult">
 	<id property="fnum" column="fnum"/>
 			<result property="fname" column="fname"/>
 			<result property="oname" column="oname"/>
 	</resultMap>
 	
 	
-	<select id="boardSelect" parameterType="BoardVo" resultMap="boardFile">
+	<select id="boardSelect" parameterType="BoardVO" resultMap="boardFile">
 		select Q.*,F.fnum, F.fname, F.oname
         from qna Q full outer join qnafiles F
         on Q.num = F.num

@@ -46,14 +46,61 @@
 	</div>
 </body>
 <script type="text/javascript">
-
+//summernote
 $("#contents").summernote({
-	height: 100
+	height: 100,
+//onImageUpload
+	callbacks : {
+		onImageUpload : function(files, editor) {
+			uploadFile(files[0], this);
+		}, //upload의 끝
+		onMediaDelete : function(files, editor){
+			deleteFile(files[0], this);
+		}// delete의 끝
+	}//callBack의 끝
 });
+ 
+function deleteFile(file, editor) {
+	var fileName = $(file).attr("src");
+	fileName = fileName.substring(fileName.lastIndexOf("/")+1);
+	$.ajax({
+		type:"POST",
+		utl:"summerFileDelete",
+		data:{
+			file:fileName
+		},
+		success:function(data){
+			console.log(data);
+		}
+		
+	});
+}
 
+function uploadFile(file, editor) {
+	var formData = new FormData();
+	formData.append('file', file); //파라미터 추가
+	$.ajax({
+		data:formData,
+		type:"POST",
+		url:"./summerFile",
+		enctype:"multipart/form-data",
+		contentType:false,
+		cache:false,
+		processData:false,
+		success:function(data){
+			data=data.trim();
+			//여기까지가 fileName
+			/*******************/
+			data = '../resources/upload/summerFile/'+data;
+			$(editor).summernote('insertImage', data);
+		}
+	});
+};
+
+/***********************************************************/
 
 var files = $("#files").html();
-var count =0 ;
+var count = 0;
 var index = 0; // index  번호 
 
 $("#files").on("click", ".del",function(){
@@ -73,11 +120,6 @@ $("#add").click(function() {
 		}
 });
 
-var divs = document.querySelector("div")
-divs.forEach(function (div) {
-	div.addEventListener('click', function () {
-		alert('del');
-})});
 
 
 

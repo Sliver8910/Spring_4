@@ -5,17 +5,17 @@
 
   
   <mapper namespace="noticeFilesMapper">
-  	<select id="fileSelect" resultType="NoticeFilesVO" parameterType="NoticeFilesVO">
+  	<select id="fileSelect" resultType="FilesVO" parameterType="FilesVO">
   		select * from noticeFiles where fnum=#{fnum}
   	</select>
   
-  	<insert id="fileWrite" parameterType="NoticeFilesVO">
+  	<insert id="fileWrite" parameterType="FilesVO">
   		insert into noticeFiles values(file_seq.nextval, #{num}, #{fname}, #{oname})
   	</insert>
-  	<select id="fileList" parameterType="Integer" resultType="NoticeFilesVO">
+  	<select id="fileList" parameterType="Integer" resultType="FilesVO">
   		select * from noticeFiles where num = #{num}
   	</select>
-  	<delete id="fileDelete" parameterType="NoticeFilesVO">
+  	<delete id="fileDelete" parameterType="FilesVO">
   		delete noticeFiles where fnum = #{fnum}
   	</delete>
   

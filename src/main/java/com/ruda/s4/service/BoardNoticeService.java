@@ -12,7 +12,7 @@ import com.ruda.s4.dao.BoardNoticeDAO;
 import com.ruda.s4.dao.NoticeFilesDAO;
 import com.ruda.s4.model.BoardNoticeVO;
 import com.ruda.s4.model.BoardVO;
-import com.ruda.s4.model.NoticeFilesVO;
+import com.ruda.s4.model.FilesVO;
 import com.ruda.s4.util.FileSaver;
 import com.ruda.s4.util.Pager;
 @Service	
@@ -25,12 +25,23 @@ public class BoardNoticeService implements BoardService{
 	@Inject
 	private NoticeFilesDAO noticeFilesDAO;
 	
-	public NoticeFilesVO fileSelect(NoticeFilesVO noticeFilesVO)throws Exception{
-		return noticeFilesDAO.fileSelect(noticeFilesVO);
+	public boolean summerFileDelete(String File, HttpSession session)throws Exception{
+		String realPath = session.getServletContext().getRealPath("resources/upload/summerFile");
+		return fileSaver.fileDelete(realPath, File);
 	}
 	
-	public int fileDelete(NoticeFilesVO noticeFilesVO) throws Exception{
-		return noticeFilesDAO.fileDelete(noticeFilesVO);
+	public String summerFile(MultipartFile file,HttpSession session)throws Exception {
+		String realPath = session.getServletContext().getRealPath("resources/upload/summerFile");
+	
+	 	return fileSaver.save(realPath, file);
+	}
+	
+	public FilesVO fileSelect(FilesVO filesVO)throws Exception{
+		return noticeFilesDAO.fileSelect(filesVO);
+	}
+	
+	public int fileDelete(FilesVO filesVO) throws Exception{
+		return noticeFilesDAO.fileDelete(filesVO);
 	}
 
 	@Override
@@ -55,7 +66,7 @@ public class BoardNoticeService implements BoardService{
 	@Override
 	public int boardWrite(BoardVO boardVO, HttpSession session, MultipartFile [] file) throws Exception {
 		String realPath = session.getServletContext().getRealPath("resources/upload/notice");
-		NoticeFilesVO noticeFilesVO = new NoticeFilesVO();
+		FilesVO noticeFilesVO = new FilesVO();
 
 		int result = boardNoticeDAO.boardWrite(boardVO);
 		noticeFilesVO.setNum(boardVO.getNum());
@@ -75,7 +86,7 @@ public class BoardNoticeService implements BoardService{
 	@Override
 	public int boardUpdate(BoardVO boardVO,  MultipartFile [] file, HttpSession session) throws Exception {
 		String realPath = session.getServletContext().getRealPath("resources/upload/notice");
-		NoticeFilesVO noticeFilesVO = new NoticeFilesVO();
+		FilesVO noticeFilesVO = new FilesVO();
 		
 		int result = boardNoticeDAO.boardUpdate(boardVO);
 		noticeFilesVO.setNum(boardVO.getNum());

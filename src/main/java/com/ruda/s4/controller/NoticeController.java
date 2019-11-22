@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ruda.s4.model.BoardNoticeVO;
 import com.ruda.s4.model.BoardVO;
-import com.ruda.s4.model.NoticeFilesVO;
+import com.ruda.s4.model.FilesVO;
 import com.ruda.s4.service.BoardNoticeService;
 import com.ruda.s4.util.Pager;
 
@@ -27,19 +27,42 @@ public class NoticeController {
 	@Inject
 	private BoardNoticeService boardNoticeService;
 	
-	@GetMapping(value = "fileDown")
-	public ModelAndView fileDown(NoticeFilesVO noticeFilesVO) throws Exception{
-		noticeFilesVO = boardNoticeService.fileSelect(noticeFilesVO);
+	@PostMapping(value = "summerFileDelete")
+	public ModelAndView summerFileDelete(String file, HttpSession session)throws Exception{
+		boolean check = boardNoticeService.summerFileDelete(file, session);
+		String result="Delete Fail"; 
+		if(check) {
+			 result="Delete Success";
+		 }
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("file", noticeFilesVO);
+		mv.setViewName("common/common_ajaxResult");
+		mv.addObject("result", result);
+		return mv;
+	}
+	
+	@PostMapping(value = "summerFile")
+	public ModelAndView summerFile(MultipartFile file, HttpSession session)throws Exception{
+		String fileName = boardNoticeService.summerFile(file, session);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("common/common_ajaxResult");
+		mv.addObject("result", fileName);
+		
+		return mv;
+	}
+	
+	@GetMapping(value = "fileDown")
+	public ModelAndView fileDown(FilesVO FilesVO) throws Exception{
+		FilesVO = boardNoticeService.fileSelect(FilesVO);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("file", FilesVO);
 		mv.setViewName("fileDown");
 		mv.addObject("board", "notice");
 		return mv;
 	}
 	
 	@PostMapping(value = "fileDelete")
-	public ModelAndView fileDelete(NoticeFilesVO noticeFilesVO)throws Exception{
-		int result = boardNoticeService.fileDelete(noticeFilesVO);
+	public ModelAndView fileDelete(FilesVO FilesVO)throws Exception{
+		int result = boardNoticeService.fileDelete(FilesVO);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("common/common_ajaxResult");
 		mv.addObject("result", result);

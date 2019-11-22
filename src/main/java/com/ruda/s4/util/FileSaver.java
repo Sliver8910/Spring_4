@@ -13,6 +13,18 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileSaver {
 	
+	//file Delete
+	public boolean fileDelete(String realPath, String fileName)throws Exception{
+		File file = new File(realPath, fileName);
+		
+		boolean check = false;
+		//.exists() 존재한다면
+		if(file.exists()) {
+		check = file.delete();
+		 }
+		return check;
+	}
+	
 
 	//3. Io Stream 사용
 	public String save3(String realPath, MultipartFile multipartFile)throws Exception{
@@ -58,6 +70,7 @@ public class FileSaver {
 
 	// 1. Spring 에서 제공하는 FileCopyUtils 클래스의 Copy 메서드 사용
 	public String save (String realPath, MultipartFile multipartFile) throws Exception{
+		System.out.println(realPath);
 		File file = new File(realPath);   
 		if(!file.exists()) {
 			file.mkdirs();

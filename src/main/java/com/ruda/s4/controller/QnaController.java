@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ruda.s4.model.BoardVO;
-import com.ruda.s4.model.QnaFilesVO;
+import com.ruda.s4.model.FilesVO;
 import com.ruda.s4.service.BoardQnaService;
 import com.ruda.s4.util.Pager;
 
@@ -26,18 +26,18 @@ public class QnaController {
 	private BoardQnaService boardQnaService;
 	
 	@GetMapping(value = "fileDownQna")
-	public ModelAndView fileDown(QnaFilesVO qnaFilesVO)throws Exception{
-		qnaFilesVO = boardQnaService.fileSelect(qnaFilesVO);
+	public ModelAndView fileDown(FilesVO filesVO)throws Exception{
+		filesVO = boardQnaService.fileSelect(filesVO);
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("file", qnaFilesVO);
+		mv.addObject("file", filesVO);
 		mv.setViewName("fileDownQna");
 		mv.addObject("board", "qna");
 		return mv;
 	}
 	
 	@PostMapping(value = "fileDelete")
-	public ModelAndView fileDelete(QnaFilesVO qnaFilesVO)throws Exception{
-		int result = boardQnaService.fileDelete(qnaFilesVO);
+	public ModelAndView fileDelete(FilesVO filesVO)throws Exception{
+		int result = boardQnaService.fileDelete(filesVO);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("common/common_ajaxResult");
 		mv.addObject("result", result);
@@ -80,7 +80,9 @@ public class QnaController {
 	public ModelAndView boardSelect(BoardVO boardVO)throws Exception{
 		ModelAndView mv = new ModelAndView();
 		boardVO = boardQnaService.boardSelect(boardVO);
-		//boardVO.setContents(boardVO.getContents().replace("\r\n", "<br>"));
+		if(boardVO.getContents() != null) {
+		boardVO.setContents(boardVO.getContents().replace("\r\n", "<br>"));
+		}
 		mv.addObject("dto", boardVO);
 		mv.addObject("board", "qna");
 		mv.setViewName("board/boardSelect");
