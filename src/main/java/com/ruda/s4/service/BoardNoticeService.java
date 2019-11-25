@@ -1,5 +1,6 @@
 package com.ruda.s4.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -77,7 +78,11 @@ public class BoardNoticeService implements BoardService{
 			String fileName = fileSaver.save(realPath, multipartFile); // fname
 			noticeFilesVO.setFname(fileName);
 			noticeFilesVO.setOname(multipartFile.getOriginalFilename());
-			noticeFilesDAO.fileWrite(noticeFilesVO); }
+			result = noticeFilesDAO.fileWrite(noticeFilesVO); 
+			if(result<1) {
+				throw new SQLException();
+				}
+			}
 		}
 
 		return result;

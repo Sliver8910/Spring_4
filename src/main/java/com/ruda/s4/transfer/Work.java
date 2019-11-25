@@ -12,5 +12,6 @@ public class Work {
 	public void goWork() {
 		transfer.getBus("Samsung");
 		transfer.getSubway("Kakao");
+		transfer.taxi();
 	}
 }
