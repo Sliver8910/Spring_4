@@ -30,8 +30,16 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
+		try {
+			model.addAttribute("serverTime", formattedDate );
+			String a = "abc";
+			//a.charAt(10);
+			int n = Integer.parseInt(a);
+			throw new NumberFormatException();
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+		}
 		
 		return "index";
 	}

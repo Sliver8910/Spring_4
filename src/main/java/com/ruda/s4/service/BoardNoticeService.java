@@ -77,7 +77,11 @@ public class BoardNoticeService implements BoardService{
 			String fileName = fileSaver.save(realPath, multipartFile); // fname
 			noticeFilesVO.setFname(fileName);
 			noticeFilesVO.setOname(multipartFile.getOriginalFilename());
-			noticeFilesDAO.fileWrite(noticeFilesVO); }
+			result = noticeFilesDAO.fileWrite(noticeFilesVO); 
+			if(result<1) {
+				
+				}
+			}
 		}
 
 		return result;
