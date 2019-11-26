@@ -80,16 +80,16 @@ public class MemberController {
 	}
 	
 	@GetMapping(value = "memberUpdate")
-	public String memberUpdate(Model model ,MemberVO memberVO)throws Exception{
-		memberVO = memberServiceImpl.memberLogin(memberVO);
+	public String memberUpdate(Model model ,MemberVO memberVO, HttpSession session)throws Exception{
+		memberVO = (MemberVO)session.getAttribute("member");
 		model.addAttribute("dto", memberVO);
 		return "member/memberUpdate";
 	}
 	
 	@PostMapping(value = "memberUpdate")
-	public ModelAndView memberUpdate(MemberVO memberVO)throws Exception{
+	public ModelAndView memberUpdate(MemberVO memberVO, HttpSession session)throws Exception{
 		ModelAndView mv = new ModelAndView();
-		int result = memberServiceImpl.memberUpdate(memberVO);
+		int result = memberServiceImpl.memberUpdate((MemberVO)session.getAttribute("dto"));
 		String message = "Update Fail";
 		if(result>0) {
 			message = "Update Success";

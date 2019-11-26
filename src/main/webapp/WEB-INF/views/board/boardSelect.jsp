@@ -39,8 +39,10 @@
 		</div>
 		
 		<a href="${board}List" class="btn btn-primary">글목록</a>
-		<a class="btn btn-primary" href="${board}Update?num=${dto.num}">Update</a>
-		<a class="btn btn-danger" href="${board}Delete?num=${dto.num}">Delete</a>
+		<c:if test="${member.id eq dto.writer}">
+			<a class="btn btn-primary" href="${board}Update?num=${dto.num}">Update</a>
+			<a class="btn btn-danger" href="${board}Delete?num=${dto.num}">Delete</a>
+		</c:if>
 		<c:if test="${board eq 'qna'}">
 			<a class="btn btn-primary" href="${board}Reply?num=${dto.num}">답글</a>
 		</c:if>
