@@ -82,8 +82,9 @@
 			</ul>
 
 		</div>
-
-		<a class="btn btn-primary" href="./${board}Write">Write</a>
+		<c:if test="${not empty member}">
+			<a class="btn btn-primary" href="./${board}Write">Write</a>
+		</c:if>
 	</div>
 
 	<script type="text/javascript">

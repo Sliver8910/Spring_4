@@ -71,7 +71,7 @@ public class MemberController {
 		//session.removeAttribute("member");
 		session.invalidate();//유지시간을0으로 변경
 		return "redirect:../";
-	}
+	};
 	
 	@GetMapping(value = "memberMypage")
 	public void memberMypage(HttpSession session)throws Exception{
