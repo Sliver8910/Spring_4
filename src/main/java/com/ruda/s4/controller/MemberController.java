@@ -87,7 +87,7 @@ public class MemberController {
 	}
 	
 	@PostMapping(value = "memberUpdate")
-	public ModelAndView memberUpdate(MemberVO memberVO )throws Exception{
+	public ModelAndView memberUpdate(MemberVO memberVO)throws Exception{
 		ModelAndView mv = new ModelAndView();
 		int result = memberServiceImpl.memberUpdate(memberVO);
 		String message = "Update Fail";
