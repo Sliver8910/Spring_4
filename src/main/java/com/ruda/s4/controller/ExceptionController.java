@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice  //예외처리를 하는 컨트롤러를 만드는 Annotation
 public class ExceptionController {
 	
-	
 	@ExceptionHandler(NullPointerException.class)
 	public ModelAndView getNull() {
 		ModelAndView mv = new ModelAndView();
