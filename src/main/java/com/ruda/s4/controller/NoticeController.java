@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,8 +30,13 @@ public class NoticeController {
 	@Inject
 	private BoardNoticeService boardNoticeService;
 	
-	@Value("${notice}")
+	@Value("#{db['notice']}")
 	private String board;
+	
+	@ModelAttribute("board")
+	public String getBoard() {
+		return board;
+	}
 	
 	@PostMapping(value = "summerFileDelete")
 	public ModelAndView summerFileDelete(String file, HttpSession session)throws Exception{
@@ -61,7 +67,6 @@ public class NoticeController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("file", FilesVO);
 		mv.setViewName("fileDown");
-		mv.addObject("board", "notice");
 		return mv;
 	}
 	
@@ -82,7 +87,6 @@ public class NoticeController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("list", ar);
 		mv.addObject("pager" ,pager);
-		mv.addObject("board", "notice");
 		mv.setViewName("board/boardList");
 		return mv;
 		
@@ -113,8 +117,7 @@ public class NoticeController {
 		ModelAndView mv = new ModelAndView();
 		boardVO = boardNoticeService.boardSelect(boardVO);
 		boardVO.setContents(boardVO.getContents().replace("\r\n", "<br>"));
-		mv.addObject("dto", boardVO);
-		mv.addObject("board", "notice");
+		//mv.addObject("dto", boardVO);
 		mv.setViewName("board/boardSelect");
 		return mv;
 	}
@@ -139,7 +142,6 @@ public class NoticeController {
 		BoardNoticeVO boardNoticeVO = (BoardNoticeVO)boardVO;
 		model.addAttribute("size", boardNoticeVO.getFiles().size());
 		model.addAttribute("dto", boardVO);
-		model.addAttribute("board", "notice");
 		return "board/boardUpdate";
 	}
 	

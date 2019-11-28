@@ -25,26 +25,26 @@
 			</thead> 
 			<tbody> 
 				<tr>
-					<td id="title1">${dto.title}</td><td class="th1">${dto.writer}</td><td class="th1 date">${dto.reg_date}</td><td class="th1 hit">${dto.hit}</td>
+					<td id="title1">${boardVO.title}</td><td class="th1">${boardVO.writer}</td><td class="th1 date">${boardVO.reg_date}</td><td class="th1 hit">${boardVO.hit}</td>
 				</tr>
 				<tr>
-					<td colspan="4"><div class="con1">${dto.contents}</div></td>
+					<td colspan="4"><div class="con1">${boardVO.contents}</div></td>
 				</tr>
 			</tbody>
 		</table>
 		<div>
-			<c:forEach items="${dto.files}" var="file">
+			<c:forEach items="${boardVO.files}" var="file">
 				<a href="./fileDown?fnum=${file.fnum}">${file.oname}</a>
 			</c:forEach>
 		</div>
 		
 		<a href="${board}List" class="btn btn-primary">글목록</a>
-		<c:if test="${member.id eq dto.writer}">
-			<a class="btn btn-primary" href="${board}Update?num=${dto.num}">Update</a>
-			<a class="btn btn-danger" href="${board}Delete?num=${dto.num}">Delete</a>
+		<c:if test="${member.id eq boardVO.writer}">
+			<a class="btn btn-primary" href="${board}Update?num=${boardVO.num}">Update</a>
+			<a class="btn btn-danger" href="${board}Delete?num=${boardVO.num}">Delete</a>
 		</c:if>
 		<c:if test="${board eq 'qna'}">
-			<a class="btn btn-primary" href="${board}Reply?num=${dto.num}">답글</a>
+			<a class="btn btn-primary" href="${board}Reply?num=${boardVO.num}">답글</a>
 		</c:if>
 	</div>
 	

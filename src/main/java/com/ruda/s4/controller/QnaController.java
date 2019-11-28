@@ -5,9 +5,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,13 +27,21 @@ public class QnaController {
 	@Inject
 	private BoardQnaService boardQnaService;
 	
+	@Value("#{db['qna']}")
+	private String board;
+	
+	@ModelAttribute("board")
+	public String getBoard() {
+		return board;
+	}
+	
 	@GetMapping(value = "fileDownQna")
 	public ModelAndView fileDown(FilesVO filesVO)throws Exception{
 		filesVO = boardQnaService.fileSelect(filesVO);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("file", filesVO);
 		mv.setViewName("fileDownQna");
-		mv.addObject("board", "qna");
+		
 		return mv;
 	}
 	
@@ -50,7 +60,7 @@ public class QnaController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("list", ar);
 		mv.addObject("pager" ,pager);
-		mv.addObject("board", "qna");
+		
 		mv.setViewName("board/boardList");
 		return mv;
 	}
@@ -65,14 +75,14 @@ public class QnaController {
 		}
 		mv.addObject("msg", message);
 		mv.addObject("path", "./qnaList");
-		mv.addObject("board", "qna");
+		
 		mv.setViewName("common/common_result");
 		return mv;
 	}
 	
 	@RequestMapping(value = "qnaWrite", method = RequestMethod.GET)
 	public String boardWrite(Model model)throws Exception{
-		model.addAttribute("board", "qna");
+	
 		return "board/boardWrite";
 	}
 	
@@ -84,7 +94,7 @@ public class QnaController {
 		boardVO.setContents(boardVO.getContents().replace("\r\n", "<br>"));
 		}
 		mv.addObject("dto", boardVO);
-		mv.addObject("board", "qna");
+		
 		mv.setViewName("board/boardSelect");
 		return mv;
 	}
@@ -108,7 +118,7 @@ public class QnaController {
 	public String boardUpdate(Model model, BoardVO boardVO)throws Exception{
 		boardVO = boardQnaService.boardSelect(boardVO);
 		model.addAttribute("dto", boardVO);
-		model.addAttribute("board", "qna");
+		
 		return "board/boardUpdate";
 	}
 	
@@ -131,7 +141,7 @@ public class QnaController {
 	@RequestMapping(value = "qnaReply", method = RequestMethod.GET)
 	public String boardReply(BoardVO boardVO ,Model model)throws Exception{
 		model.addAttribute("dto", boardVO);
-		model.addAttribute("board", "qna");
+		
 		return "board/boardReply";
 	}
 	

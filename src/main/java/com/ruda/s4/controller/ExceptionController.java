@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-@ControllerAdvice  //예외처리를 하는 컨트롤러를 만드는 Annotation
+//@ControllerAdvice  //예외처리를 하는 컨트롤러를 만드는 Annotation
 public class ExceptionController {
 	
 	@ExceptionHandler(NullPointerException.class)
