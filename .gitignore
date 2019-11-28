@@ -22,3 +22,10 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 target/m2e-wtp/web-resources/META-INF/maven/com.ruda/s4/pom.properties
+target/m2e-wtp/web-resources/META-INF/maven/com.ruda/s4/pom.properties
+src/main/resources/mybatis/properties/Common.properties
+src/main/resources/mybatis/properties/DataSource.properties
+target/classes/mybatis/properties/Common.properties
+target/classes/mybatis/properties/DataSource.properties
+target/m2e-wtp/web-resources/META-INF/maven/com.ruda/s4/pom.properties
+target/m2e-wtp/web-resources/META-INF/maven/com.ruda/s4/pom.properties
