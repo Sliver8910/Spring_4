@@ -10,11 +10,13 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:property-placeholder file-encoding="UTF-8" location="classpath:/mybatis/properties/DataSource.properties"/>
+	
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
-		<property name="username" value="spring01" />
-		<property name="password" value="spring01" />
-		<property name="url" value="jdbc:oracle:thin:@192.168.56.102:1521:xe" />
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="username" value="${oracle.user}" />
+		<property name="password" value="${oracle.password}" />
+		<property name="url" value="${oracle.url}" />
+		<property name="driverClassName" value="${oracle.driver}" />
 	</bean>
 
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
