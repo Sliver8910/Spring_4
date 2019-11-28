@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<context:property-placeholder file-encoding="UTF-8" location="classpath:/mybatis/properties/DataSource.properties"/>
+	<context:property-placeholder file-encoding="UTF-8" location="classpath:/mybatis/properties/**/*.properties"/>
 	
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
 		<property name="username" value="${oracle.user}" />
@@ -22,7 +22,7 @@
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="mapperLocations" value="classpath:/mybatis/mappers/*Mapper.xml"></property>
-		<property name="configLocation" value="classpath:/mybatis/config/mybatisConfig.xml"></property>
+		<property name="configLocation" value="classpath:/${my}/config/mybatisConfig.xml"></property>
 	</bean>
 
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
