@@ -27,8 +27,24 @@
 		<beans:property name="order" value="0"></beans:property>
 	</beans:bean>
 	
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**/*Update"/>
+			<!-- 객체를  bean이 아니라 annotataion 으로 생성 -->
+			<beans:ref bean="updateInterceptor"/>
+		</interceptor>
+	
+		<interceptor>
+			<mapping path="/qna/*"/>
+			<exclude-mapping path="/qna/qnaList"/>
+			<beans:bean class="com.ruda.s4.Interceptors.LoginInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+	
 	<context:component-scan base-package="com.ruda.s4" />
 	
+	<context:property-placeholder file-encoding="UTF-8" location="classpath:/mybatis/properties/**/*.properties"/>
 	
 	
 </beans:beans>
